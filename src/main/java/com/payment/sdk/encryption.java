@@ -8,7 +8,6 @@ import java.security.NoSuchAlgorithmException;
 import org.kopitubruk.util.json.JSONUtil;
 
 class MapKeyComparator implements Comparator<String>{
-
     public int compare(String str1, String str2) {
         return str1.compareTo(str2);
     }

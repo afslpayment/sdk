@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+</head>
+<body>
+<form class="form-signin">
+        <div class="login-wrap">
+        	<label>订单号（唯一）：</label>
+            <input type="text" class="form-control" name="v_oid" value="" placeholder="订单号" required>
+            <br />
+            <label>订单金额</label>
+            <input type="text" class="form-control" name="v_amount" value="" placeholder="订单总额" required> 
+            <br />                                        
+            <button class="btn btn-lg btn-login btn-block" id="pay" type="submit">
+                <i class="fa fa-check">提交</i>
+            </button>
+        </div>
+</form>
+<script src="jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+    var post_m = function(url,data) {
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = url;
+        for (var key in data) {
+            var opt = document.createElement("input");
+            opt.name = key; 
+            opt.value = data[key];
+            form.appendChild(opt);
+        }
+        document.body.appendChild(form);        
+        form.submit(); 
+    }
+</script>
+<script type="text/javascript">
+    $("form").bind("submit", function() {
+        var data = {};
+        data['v_oid'] = $("input[name='v_oid']").val();
+        data['v_amount'] = $("input[name='v_amount']").val();
+        $.ajax({
+            url:"{服务器调用singToString返回给这个url}",
+            method:"POST",
+            data:data,
+            dataType:"json",
+            success:function(data){
+                console.log(data);
+                post_m("http://www.jadebirdpay.com/PayManager/Pay/sendabcpost",data);
+            },
+        });
+        return false;
+    })
+</script>        
+</body>
+</html>
